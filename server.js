@@ -1,20 +1,21 @@
 const express = require("express");
 const app = express();
-const config = require("./config/config");
+const dotenv = require("dotenv");
+const connectDB = require("./config/config");
 
 const port = process.env.PORT || 5000;
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-//eest
-// asdasdf
+dotenv.config();
+connectDB();
+
 const contactMeRoute = require("./routes/saveMsg");
+const getFormDataRoute = require("./routes/getFormData");
 
 const cors = require("cors");
 app.use(
   cors({
-    // origin: 'http://localhost:5173'
     origin: "*",
   })
 );
@@ -24,6 +25,7 @@ app.get("/testing", (req, res) => {
 });
 
 app.use("/contact-me", contactMeRoute);
+app.use("/get-formdata", getFormDataRoute);
 
 app.listen(port, (error) => {
   // if(!error) console.log("main--> Server running at port,", port);
