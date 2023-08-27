@@ -2,20 +2,24 @@ const OrderDetails = require("../models/OrderDetails");
 
 const buyProduct = async (req, res) => {
   try {
-    const { orderName, custContact, custEmail, custAddress, orderPrice, tax } =
-      req.body;
+    const { custContact, custEmail, custAddress, orderPrice, tax } = req.body;
+    let orderName = Math.floor(1000 + Math.random() * 9000);
     const newOrder = new OrderDetails({
       orderName,
       custContact,
       custEmail,
       custAddress,
       orderPrice,
-      tax,
+      tax: 0,
       isFullfilled: false,
     });
     const order = await newOrder.save();
     if (order) {
-      res.json({ success: true, data: order });
+      res.json({
+        success: true,
+        data: order,
+        msg: `Order Placed, order id: ${orderName}`,
+      });
     } else {
       res.json({ success: false, data: null });
     }
