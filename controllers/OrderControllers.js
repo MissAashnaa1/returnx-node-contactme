@@ -11,7 +11,7 @@ const buyProduct = async (req, res) => {
       custAddress,
       orderPrice,
       tax,
-      fullfilled: false,
+      isFullfilled: false,
     });
     const order = await newOrder.save();
     if (order) {
@@ -30,10 +30,11 @@ const verifyOrder = async (req, res) => {
 
     if (
       order &&
-      (order.orderName === req.body.orderName ||
-        order.custContact === req.body.custContact)
+      ((order.custContact === null && order.custEmail === req.body.custEmail) ||
+        (order.custEmail === null &&
+          order.custContact === req.body.custContact))
     ) {
-      if (order.fullfilled) {
+      if (order.isFullfilled) {
         res.json({ success: true, msg: "Order already fullfilled" });
       } else {
         res.json({ success: false, msg: "Order not fullfilled" });
