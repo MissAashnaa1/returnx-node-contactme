@@ -4,10 +4,16 @@ const ContactMe = require("../models/ContactMe");
 const router = express.Router();
 
 router.route("/").get(async (req, res) => {
-  const data = await ContactMe.find();
-  if (data) {
-    res.json({ success: true, data: data });
-  } else {
+  try {
+    const data = await ContactMe.find();
+
+    if (data) {
+      res.json({ success: true, data: data });
+    } else {
+      res.json({ success: false, data: null });
+    }
+  } catch (err) {
+    console.log(err);
     res.json({ success: false, data: null });
   }
 });

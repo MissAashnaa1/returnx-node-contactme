@@ -5,7 +5,6 @@ const contactSchema = new mongoose.Schema({
   message: String,
 });
 
-// first arg in collection name
 module.exports = mongoose.model("Contact-Me-Shopify", contactSchema);
 
 console.log("collection connected");

@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 const connectDB = require("./config/config");
 
 const port = process.env.PORT || 5000;
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -26,9 +27,12 @@ app.get("/testing", (req, res) => {
 
 app.use("/contact-me", contactMeRoute);
 app.use("/get-formdata", getFormDataRoute);
+app.use("/buy-product", require("./routes/buyProduct"));
+app.use("/verify-order", require("./routes/verifyOrder"));
+app.use("/get-products", require("./routes/getProducts"));
+app.use("/add-product", require("./routes/addProduct"));
 
 app.listen(port, (error) => {
-  // if(!error) console.log("main--> Server running at port,", port);
   if (!error) console.log(`App listening at http://localhost:${port}`);
   else console.log("Error! ", error);
 });
